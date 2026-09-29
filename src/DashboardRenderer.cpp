@@ -31,8 +31,9 @@ void DashboardRenderer::renderTable(const std::vector<Vehicle>& vehicles) {
 
     std::cout << std::right << std::setw(kIdWidth) << "ID" << "  " << std::left
               << std::setw(nameWidth) << "Name" << "  " << std::right
-              << std::setw(kSpeedWidth) << "Speed" << "  " << std::setw(kBatteryWidth)
-              << "Battery" << "  " << std::setw(kLatitudeWidth) << "Latitude" << "  "
+              << std::setw(kSpeedWidth) << "Speed" << "  "
+              << std::setw(kBatteryWidth) << "Battery" << "  "
+              << std::setw(kLatitudeWidth) << "Latitude" << "  "
               << std::setw(kLongitudeWidth) << "Longitude" << "  " << std::left
               << std::setw(kUpdatedWidth) << "Last Updated" << '\n';
 
@@ -40,12 +41,12 @@ void DashboardRenderer::renderTable(const std::vector<Vehicle>& vehicles) {
     for (const Vehicle& vehicle : vehicles) {
         std::cout << std::right << std::setw(kIdWidth) << vehicle.id << "  "
                   << std::left << std::setw(nameWidth) << vehicle.name << "  "
-                  << std::right << std::setw(kSpeedWidth) << vehicle.speed << "  "
-                  << std::setw(kBatteryWidth) << vehicle.battery << "  "
+                  << std::right << std::setw(kSpeedWidth) << vehicle.speed
+                  << "  " << std::setw(kBatteryWidth) << vehicle.battery << "  "
                   << std::setw(kLatitudeWidth) << vehicle.latitude << "  "
                   << std::setw(kLongitudeWidth) << vehicle.longitude << "  "
-                  << std::left << std::setw(kUpdatedWidth) << vehicle.lastUpdated
-                  << '\n';
+                  << std::left << std::setw(kUpdatedWidth)
+                  << vehicle.lastUpdated << '\n';
     }
 }
 
@@ -59,8 +60,8 @@ void DashboardRenderer::renderSummary(const FleetSummary& summary) {
     // Omit the warning section entirely when there are no low-battery vehicles
     // (resolved decision: omit).
     if (!summary.lowBatteryVehicles.empty()) {
-        std::cout << "  Low battery vehicles (" << summary.lowBatteryVehicles.size()
-                  << "):\n";
+        std::cout << "  Low battery vehicles ("
+                  << summary.lowBatteryVehicles.size() << "):\n";
         for (const Vehicle& vehicle : summary.lowBatteryVehicles) {
             std::cout << "    - " << vehicle.name << " (id " << vehicle.id
                       << ", battery " << vehicle.battery << "%)\n";

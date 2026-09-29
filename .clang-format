@@ -1,0 +1,25 @@
+# clang-format configuration for the Vehicle Telemetry Visualization project.
+# Matches the conventions in .github/copilot-instructions.md: 4-space indent,
+# K&R braces, left-aligned pointers/references, 80-column limit.
+---
+Language: Cpp
+BasedOnStyle: LLVM
+Standard: c++17
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+ColumnLimit: 80
+AccessModifierOffset: 0
+BreakBeforeBraces: Attach
+PointerAlignment: Left
+ReferenceAlignment: Left
+AlignAfterOpenBracket: Align
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+AlwaysBreakTemplateDeclarations: Yes
+SortIncludes: true
+IncludeBlocks: Preserve
+ReflowComments: false
+SpacesBeforeTrailingComments: 2
+...

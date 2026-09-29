@@ -16,7 +16,7 @@ struct FleetSummary {
 // service instance. Copy construction/assignment are deleted; the default
 // constructor is private.
 class TelemetryService {
-public:
+    public:
     static TelemetryService& getInstance();
 
     const VehicleRepository& getRepository() const;
@@ -25,7 +25,7 @@ public:
     TelemetryService(const TelemetryService&) = delete;
     TelemetryService& operator=(const TelemetryService&) = delete;
 
-private:
+    private:
     TelemetryService() = default;
 
     VehicleRepository repository_;

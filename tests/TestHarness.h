@@ -52,12 +52,14 @@ inline int& failureCount() {
 }
 
 struct Registrar {
-    Registrar(const std::string& id, const std::string& name, std::function<void()> fn) {
+    Registrar(const std::string& id, const std::string& name,
+              std::function<void()> fn) {
         registry().push_back(TestCase{id, name, std::move(fn)});
     }
 };
 
-inline void reportFailure(const char* file, int line, const std::string& message) {
+inline void reportFailure(const char* file, int line,
+                          const std::string& message) {
     ++failureCount();
     std::printf("    CHECK FAILED at %s:%d: %s\n", file, line, message.c_str());
 }
@@ -82,7 +84,8 @@ inline int runAll() {
             ++failed;
         }
     }
-    std::printf("TOTAL %d PASSED %d FAILED %d\n", passed + failed, passed, failed);
+    std::printf("TOTAL %d PASSED %d FAILED %d\n", passed + failed, passed,
+                failed);
     return failed == 0 ? 0 : 1;
 }
 
@@ -95,37 +98,35 @@ inline int runAll() {
 #define TESTHARNESS_CONCAT_(a, b) a##b
 #define TESTHARNESS_CONCAT(a, b) TESTHARNESS_CONCAT_(a, b)
 
-#define TEST_CASE(id, name)                                              \
-    static void TESTHARNESS_CONCAT(testharness_case_, __LINE__)();       \
-    static ::testharness::Registrar                                      \
-        TESTHARNESS_CONCAT(testharness_registrar_, __LINE__)(            \
-            id, name, TESTHARNESS_CONCAT(testharness_case_, __LINE__));  \
+#define TEST_CASE(id, name)                                                    \
+    static void TESTHARNESS_CONCAT(testharness_case_, __LINE__)();             \
+    static ::testharness::Registrar TESTHARNESS_CONCAT(testharness_registrar_, \
+                                                       __LINE__)(              \
+        id, name, TESTHARNESS_CONCAT(testharness_case_, __LINE__));            \
     static void TESTHARNESS_CONCAT(testharness_case_, __LINE__)()
 
-#define CHECK(cond)                                                      \
-    do {                                                                 \
-        if (!(cond)) {                                                   \
-            ::testharness::reportFailure(__FILE__, __LINE__, #cond);     \
-        }                                                                \
+#define CHECK(cond)                                                            \
+    do {                                                                       \
+        if (!(cond)) {                                                         \
+            ::testharness::reportFailure(__FILE__, __LINE__, #cond);           \
+        }                                                                      \
     } while (0)
 
-#define CHECK_EQ(a, b)                                                   \
-    do {                                                                 \
-        if (!((a) == (b))) {                                             \
-            ::testharness::reportFailure(__FILE__, __LINE__,             \
-                                         #a " == " #b);                  \
-        }                                                                \
+#define CHECK_EQ(a, b)                                                         \
+    do {                                                                       \
+        if (!((a) == (b))) {                                                   \
+            ::testharness::reportFailure(__FILE__, __LINE__, #a " == " #b);    \
+        }                                                                      \
     } while (0)
 
-#define CHECK_NEAR(a, b, eps)                                            \
-    do {                                                                 \
-        const double testharness_da = static_cast<double>(a);            \
-        const double testharness_db = static_cast<double>(b);            \
-        const double testharness_dd = testharness_da - testharness_db;   \
-        if (!(testharness_dd < (eps) && -testharness_dd < (eps))) {      \
-            ::testharness::reportFailure(__FILE__, __LINE__,             \
-                                         #a " ~= " #b);                  \
-        }                                                                \
+#define CHECK_NEAR(a, b, eps)                                                  \
+    do {                                                                       \
+        const double testharness_da = static_cast<double>(a);                  \
+        const double testharness_db = static_cast<double>(b);                  \
+        const double testharness_dd = testharness_da - testharness_db;         \
+        if (!(testharness_dd < (eps) && -testharness_dd < (eps))) {            \
+            ::testharness::reportFailure(__FILE__, __LINE__, #a " ~= " #b);    \
+        }                                                                      \
     } while (0)
 
 #ifdef TEST_HARNESS_MAIN

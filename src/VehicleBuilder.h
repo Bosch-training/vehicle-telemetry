@@ -8,7 +8,7 @@
 // objects. Each with* method stores the value verbatim and returns *this by
 // reference to enable chaining; build() returns a copy.
 class VehicleBuilder {
-public:
+    public:
     VehicleBuilder& withId(int id);
     VehicleBuilder& withName(const std::string& name);
     VehicleBuilder& withSpeed(double speed);
@@ -17,6 +17,6 @@ public:
     VehicleBuilder& withTimestamp(const std::string& ts);
     Vehicle build() const;
 
-private:
+    private:
     Vehicle vehicle_{};
 };

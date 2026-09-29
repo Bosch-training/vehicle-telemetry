@@ -7,8 +7,8 @@
 struct Vehicle {
     int id = 0;
     std::string name;
-    double speed = 0.0;       // km/h
-    int battery = 0;          // percent 0-100
+    double speed = 0.0;  // km/h
+    int battery = 0;     // percent 0-100
     double latitude = 0.0;
     double longitude = 0.0;
     std::string lastUpdated;  // timestamp, formatted string

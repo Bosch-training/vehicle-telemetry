@@ -15,7 +15,8 @@ namespace {
 
 int minSeededBattery() {
     int minBattery = INT_MAX;
-    for (const Vehicle& v : TelemetryService::getInstance().getRepository().getAll()) {
+    for (const Vehicle& v :
+         TelemetryService::getInstance().getRepository().getAll()) {
         if (v.battery < minBattery) {
             minBattery = v.battery;
         }
@@ -25,7 +26,8 @@ int minSeededBattery() {
 
 int maxSeededBattery() {
     int maxBattery = INT_MIN;
-    for (const Vehicle& v : TelemetryService::getInstance().getRepository().getAll()) {
+    for (const Vehicle& v :
+         TelemetryService::getInstance().getRepository().getAll()) {
         if (v.battery > maxBattery) {
             maxBattery = v.battery;
         }
@@ -53,7 +55,8 @@ TEST_CASE("TS-POS-003", "Summary average speed") {
     for (const Vehicle& v : all) {
         sum += v.speed;
     }
-    const double expected = all.empty() ? 0.0 : sum / static_cast<double>(all.size());
+    const double expected =
+        all.empty() ? 0.0 : sum / static_cast<double>(all.size());
     CHECK_NEAR(svc.getFleetSummary().averageSpeed, expected, 1e-9);
 }
 
@@ -61,9 +64,11 @@ TEST_CASE("TS-POS-004", "Default low-battery threshold is 20") {
     TelemetryService& svc = TelemetryService::getInstance();
     FleetSummary withDefault = svc.getFleetSummary();
     FleetSummary withTwenty = svc.getFleetSummary(20);
-    CHECK_EQ(withDefault.lowBatteryVehicles.size(), withTwenty.lowBatteryVehicles.size());
+    CHECK_EQ(withDefault.lowBatteryVehicles.size(),
+             withTwenty.lowBatteryVehicles.size());
     for (std::size_t i = 0; i < withDefault.lowBatteryVehicles.size(); ++i) {
-        CHECK_EQ(withDefault.lowBatteryVehicles[i].id, withTwenty.lowBatteryVehicles[i].id);
+        CHECK_EQ(withDefault.lowBatteryVehicles[i].id,
+                 withTwenty.lowBatteryVehicles[i].id);
     }
     for (const Vehicle& v : withDefault.lowBatteryVehicles) {
         CHECK(v.battery < 20);
@@ -142,7 +147,8 @@ TEST_CASE("TS-EDGE-003", "Threshold equals a seeded battery value") {
 
     FleetSummary atThreshold = svc.getFleetSummary(t);
     for (const Vehicle& v : atThreshold.lowBatteryVehicles) {
-        CHECK(v.id != target.id);  // strict less-than excludes the boundary vehicle
+        CHECK(v.id !=
+              target.id);  // strict less-than excludes the boundary vehicle
     }
 
     FleetSummary aboveThreshold = svc.getFleetSummary(t + 1);
@@ -165,7 +171,8 @@ TEST_CASE("TS-EDGE-008", "INT_MIN and INT_MAX thresholds") {
     TelemetryService& svc = TelemetryService::getInstance();
     CHECK(svc.getFleetSummary(INT_MIN).lowBatteryVehicles.empty());
     FleetSummary all = svc.getFleetSummary(INT_MAX);
-    CHECK_EQ(all.lowBatteryVehicles.size(), static_cast<std::size_t>(all.totalVehicles));
+    CHECK_EQ(all.lowBatteryVehicles.size(),
+             static_cast<std::size_t>(all.totalVehicles));
 }
 
 TEST_CASE("TS-EXH-001", "All vehicles below threshold") {
@@ -188,11 +195,13 @@ TEST_CASE("TS-EXH-004", "Threshold sweep") {
     TelemetryService& svc = TelemetryService::getInstance();
     std::size_t previous = 0;
     for (int t = 0; t <= 101; ++t) {
-        const std::size_t count = svc.getFleetSummary(t).lowBatteryVehicles.size();
+        const std::size_t count =
+            svc.getFleetSummary(t).lowBatteryVehicles.size();
         CHECK(count >= previous);  // monotonic non-decreasing
         previous = count;
     }
-    CHECK_EQ(svc.getFleetSummary(0).lowBatteryVehicles.size(), static_cast<std::size_t>(0));
+    CHECK_EQ(svc.getFleetSummary(0).lowBatteryVehicles.size(),
+             static_cast<std::size_t>(0));
     CHECK_EQ(svc.getFleetSummary(101).lowBatteryVehicles.size(),
              svc.getRepository().getAll().size());
 }

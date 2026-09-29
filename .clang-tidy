@@ -1,0 +1,16 @@
+# clang-tidy configuration for the Vehicle Telemetry Visualization project.
+# The CI lint job runs `clang-tidy -p build --warnings-as-errors='*'` with no
+# --checks flag, so the enabled checks must come from this file.
+---
+Checks: >
+  bugprone-*,
+  performance-*,
+  clang-analyzer-*,
+  modernize-*,
+  -modernize-use-trailing-return-type,
+  -modernize-use-nodiscard,
+  -modernize-avoid-c-arrays,
+  -bugprone-easily-swappable-parameters
+WarningsAsErrors: ''
+HeaderFilterRegex: '.*'
+FormatStyle: file

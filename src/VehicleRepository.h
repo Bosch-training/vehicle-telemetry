@@ -9,12 +9,12 @@
 // details behind getAll() / getById(). The constructor seeds 5-8 mock vehicles
 // via VehicleBuilder — the single source of mock data.
 class VehicleRepository {
-public:
+    public:
     VehicleRepository();
 
     const std::vector<Vehicle>& getAll() const;
     std::optional<Vehicle> getById(int id) const;
 
-private:
+    private:
     std::vector<Vehicle> vehicles_;
 };
