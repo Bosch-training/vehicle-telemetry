@@ -1,0 +1,23 @@
+{
+  "skill_name": "ut-test-design-review",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Can you review the unit test design in docs/ut-design/unit-test-design.csv and tell me if it actually covers everything in the requirements? I want to know what's missing before we start implementing the tests.",
+      "expected_output": "A review grounded in docs/requirements.md and docs/swdd.md: a coverage matrix mapping each FR/VC to covering case IDs, per-component category balance, findings with severity and evidence, and concrete proposed cases for each gap. Produces review-findings.csv and review-report.md without modifying the design CSV.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "audit the telemetry service test cases for gaps - especially around the low battery threshold and the singleton. the csv is docs/ut-design/unit-test-design.csv",
+      "expected_output": "Findings scoped to TS-* cases: threshold boundary coverage on both sides, singleton identity across call sites, empty/single fleet handling, and the open question about < vs <=. Flags non-committal expected outputs and test-seam dependencies.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "is our test design complete? we need to be sure every verification criterion in the requirements doc has at least one test that would fail if the requirement were broken.",
+      "expected_output": "A discriminating-power review: for each verification criterion, names the case that would fail on violation or reports it as uncovered. Distinguishes unit-testable criteria from build/doc criteria (VC1, VC5) and reports those as verified elsewhere rather than silently passing.",
+      "files": []
+    }
+  ]
+}

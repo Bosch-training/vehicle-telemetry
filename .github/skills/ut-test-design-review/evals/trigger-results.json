@@ -1,0 +1,18 @@
+{
+  "method": "GitHub Copilot subagents (Explore), 4 parallel batches of 5 queries",
+  "note": "Simulated skill selection from name+description only; no claude CLI dependency.",
+  "date": "2026-09-29",
+  "results": {
+    "should_trigger_review": {"correct": 5, "total": 5, "queries": ["Q1", "Q2", "Q3", "Q4", "Q5"]},
+    "should_trigger_design": {"correct": 5, "total": 5, "queries": ["Q6", "Q7", "Q8", "Q9", "Q10"]},
+    "should_not_trigger_a": {"correct": 5, "total": 5, "queries": ["Q11", "Q12", "Q13", "Q14", "Q15"]},
+    "should_not_trigger_b": {"correct": 5, "total": 5, "queries": ["Q16", "Q17", "Q18", "Q19", "Q20"]}
+  },
+  "accuracy": 1.0,
+  "observations": [
+    "Q8 (fix shifted columns) routed to ut-test-design at medium confidence - correct, but the weakest case; the description's 'fix or validate the ut-design CSV' clause carried it.",
+    "Q9 (fix the review comments) routed to ut-test-design at high confidence, confirming the description update resolved the design/review ambiguity.",
+    "Q16 (markdown test plan for QA) correctly avoided both skills - the near-miss negative case worked.",
+    "Q19 (CSV of mock vehicle data) correctly avoided both skills despite sharing 'CSV' and 'vehicle' keywords."
+  ]
+}

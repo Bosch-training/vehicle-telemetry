@@ -1,0 +1,12 @@
+{
+  "builder_validation": "store",
+  "threshold_comparison": "strict",
+  "renderer_precision": 2,
+  "renderer_long_name": "widen",
+  "renderer_empty_list": "header-only",
+  "renderer_no_low_battery": "omit",
+  "test_seam": "none",
+  "zero_total": "zero",
+  "nan_average": "literal",
+  "seed_ids": "1..N"
+}

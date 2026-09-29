@@ -1,0 +1,22 @@
+[
+  {"query": "can you review the unit test design csv in docs/ut-design and tell me what's missing before we start writing the tests", "should_trigger": true, "expect": "ut-test-design-review"},
+  {"query": "audit our test cases for the telemetry service, especially the low battery threshold and the singleton", "should_trigger": true, "expect": "ut-test-design-review"},
+  {"query": "is our test design complete? need every verification criterion in the requirements doc covered by at least one test", "should_trigger": true, "expect": "ut-test-design-review"},
+  {"query": "we need a requirement to test traceability matrix for the ut design", "should_trigger": true, "expect": "ut-test-design-review"},
+  {"query": "gap check the test plan for VehicleBuilder and DashboardRenderer", "should_trigger": true, "expect": "ut-test-design-review"},
+  {"query": "create the unit test design for all four components, happy path negative edge and exhaustive, as a csv I can open in LibreOffice", "should_trigger": true, "expect": "ut-test-design"},
+  {"query": "only need test cases for TelemetryService, focus on the singleton and threshold stuff, put it in its own csv", "should_trigger": true, "expect": "ut-test-design"},
+  {"query": "the csv in docs/ut-design opens with shifted columns in excel again, can you check and fix it", "should_trigger": true, "expect": "ut-test-design"},
+  {"query": "fix the review comments on the test design", "should_trigger": true, "expect": "ut-test-design"},
+  {"query": "regenerate the ut-design csv, it got mangled when someone edited it by hand", "should_trigger": true, "expect": "ut-test-design"},
+  {"query": "write the actual C++ unit tests for VehicleBuilder using assert", "should_trigger": false, "expect": "none"},
+  {"query": "review this pull request for the telemetry service refactor", "should_trigger": false, "expect": "none"},
+  {"query": "design a REST API for telemetry ingestion with FastAPI", "should_trigger": false, "expect": "none"},
+  {"query": "parse this PDF requirements doc into markdown", "should_trigger": false, "expect": "none"},
+  {"query": "run semgrep on the src folder", "should_trigger": false, "expect": "none"},
+  {"query": "create a test plan document in markdown for the QA team to read", "should_trigger": false, "expect": "none"},
+  {"query": "fix the failing test in tests/test_vehicle_builder.cpp", "should_trigger": false, "expect": "none"},
+  {"query": "review my resume and suggest improvements", "should_trigger": false, "expect": "none"},
+  {"query": "generate a CSV of mock vehicle data for the demo", "should_trigger": false, "expect": "none"},
+  {"query": "explain what the Builder pattern is and why we use it here", "should_trigger": false, "expect": "none"}
+]

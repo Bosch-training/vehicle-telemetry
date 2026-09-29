@@ -1,0 +1,23 @@
+{
+  "skill_name": "ut-test-design",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Create the unit test design for all four components of the vehicle telemetry project. I want happy path, negative, edge and exhaustive cases in a CSV I can open in LibreOffice.",
+      "expected_output": "docs/ut-design/unit-test-design.csv with 9 exact columns, unique IDs across VB/VR/TS/DR, all four testcase types per component, every row exactly 9 fields when parsed strictly, generated via csv writer, and validate_csv.py run with a clean result.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "only need test cases for TelemetryService, focus on the low battery threshold stuff and the singleton. put it in its own csv",
+      "expected_output": "docs/ut-design/TelemetryService.csv with only TS-* IDs covering singleton identity and threshold boundaries (below, equal, above, negative, >100, empty fleet), validated by validate_csv.py.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "the csv in docs/ut-design opens with shifted columns in excel again, can you check and fix it",
+      "expected_output": "Runs validate_csv.py rather than hand-editing, reports which rows were realigned, and confirms a clean re-validation.",
+      "files": []
+    }
+  ]
+}

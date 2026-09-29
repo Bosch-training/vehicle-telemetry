@@ -1,0 +1,4 @@
+Finding ID,Severity,Category,Component,Reference,Finding,Evidence,Recommendation
+REV-001,Low,Coverage Gap,-,FR5,"FR5 (Single executable, no external runtime dependencies) is not verifiable by unit cases",build-level criterion,"Verify via the CMake build and a clean -Wall -Wextra compile, not the CSV."
+REV-002,Low,Coverage Gap,-,VC1,"VC1 (Clean compile with -Wall -Wextra, no warnings) is not verifiable by unit cases",build-level criterion,"Verify via the CMake build and a clean -Wall -Wextra compile, not the CSV."
+REV-003,Low,Coverage Gap,-,VC5,VC5 (README documents architecture and pattern placement) is a documentation deliverable,doc-level criterion,Verify by reading README.md; no unit case applies.

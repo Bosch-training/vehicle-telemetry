@@ -1,0 +1,22 @@
+{
+  "units": [
+    {
+      "id": "U1",
+      "target": "VehicleBuilder::withSpeed",
+      "transformation": "extract-method",
+      "expected_behavior": "withSpeed(60.0) stores 60.0 and returns *this for chaining",
+      "files": ["src/VehicleBuilder.cpp"],
+      "estimated_lines": 18,
+      "verify": ["unit_gate.py all", "call sites compile"]
+    },
+    {
+      "id": "U2",
+      "target": "VehicleBuilder::withBattery",
+      "transformation": "extract-method",
+      "expected_behavior": "withBattery(80) stores 80 and returns *this for chaining",
+      "files": ["src/VehicleBuilder.cpp"],
+      "estimated_lines": 18,
+      "verify": ["unit_gate.py all", "call sites compile"]
+    }
+  ]
+}

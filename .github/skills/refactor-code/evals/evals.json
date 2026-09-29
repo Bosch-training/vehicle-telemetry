@@ -1,0 +1,29 @@
+{
+  "skill_name": "refactor-code",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Refactor VehicleBuilder so the fluent setters don't repeat the same null-check boilerplate. Keep the public API exactly the same.",
+      "expected_output": "A unit plan is written and validated with validate_plan.py before editing; units are applied one at a time with unit_gate.py snapshot before and unit_gate.py all after each; the gate passes (budget, signatures unchanged, clean build); the summary reports each unit's smell -> transformation -> verification result.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "clean up TelemetryService.cpp, it's gotten messy - do whatever makes sense",
+      "expected_output": "The vague goal is turned into an explicit ordered unit plan (rename/extract before restructure), each unit within the <=50 line / <=5 file budget, each verified by the gate before the next; no batching of multiple transformations into one pass; ambiguities flagged rather than guessed.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "rename VehicleRepository::getAll to listAll and update everything that uses it",
+      "expected_output": "Recognized as a mechanical rename sweep = one unit; the gate's signature check reports the removed/added signature; the agent either confirms the goal allowed the API change or flags it; call sites updated in the same unit; build clean.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "extract the fleet-average calculation out of getFleetSummary into its own method, and while you're in there also fix the battery threshold comparison and tidy the renderer",
+      "expected_output": "The bundled request is split into separate units (extract, threshold fix, renderer tidy) rather than one pass; the threshold change is flagged as a behavior change, not a behavior-preserving refactor, and confirmed with the user before applying; each unit gated separately.",
+      "files": []
+    }
+  ]
+}
