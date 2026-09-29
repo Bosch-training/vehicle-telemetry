@@ -28,8 +28,7 @@ jobs:
         working-directory: build
         run: ctest --output-on-failure
 
-  # Lint job disabled — re-enable by uncommenting and restoring
-  # `needs: [build-and-test, lint]` on the deploy job below.
+  # Lint disabled; re-enable by uncommenting and adding `lint` back to deploy needs.
   # lint:
   #   name: Lint (clang-format & clang-tidy)
   #   runs-on: ubuntu-latest
@@ -65,16 +64,26 @@ jobs:
       github.event_name != 'pull_request' &&
       github.ref == 'refs/heads/main'
     steps:
-      - name: Write SSH key and known hosts
+      - name: Prepare SSH credentials
         env:
           EC2_HOST: ${{ secrets.EC2_HOST }}
           EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
         run: |
           set -euo pipefail
-          mkdir -p ~/.ssh
-          printf '%s\n' "$EC2_SSH_KEY" > ~/.ssh/deploy_key
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+
+          [ -n "${EC2_HOST:-}" ] || { echo "::error::EC2_HOST secret is empty"; exit 1; }
+          [ -n "${EC2_SSH_KEY:-}" ] || { echo "::error::EC2_SSH_KEY secret is empty"; exit 1; }
+
+          printf '%s\n' "$EC2_SSH_KEY" | tr -d '\r' > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H "$EC2_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+
+          ssh-keygen -y -f ~/.ssh/deploy_key >/dev/null 2>&1 \
+            || { echo "::error::EC2_SSH_KEY is not a usable private key"; exit 1; }
+
+          # Non-fatal: ssh-keyscan exits 1 when port 22 is blocked.
+          ssh-keyscan -T 10 -H "$EC2_HOST" >> ~/.ssh/known_hosts 2>/dev/null \
+            || echo "::warning::ssh-keyscan unreachable; using accept-new"
 
       - name: Update timestamp file on instance
         env:
@@ -84,10 +93,20 @@ jobs:
         run: |
           set -euo pipefail
           TIMESTAMP="$(TZ=Asia/Kolkata date '+%Y-%m-%d %H:%M:%S %Z')"
-          ssh -i ~/.ssh/deploy_key -o BatchMode=yes \
-            "$EC2_USER@$EC2_HOST" \
-            "printf '%s\n' '$TIMESTAMP' > '$TARGET_FILE'"
-          echo "Wrote IST timestamp '$TIMESTAMP' to $TARGET_FILE on $EC2_HOST"
+          SSH_OPTS=(-i ~/.ssh/deploy_key -o BatchMode=yes -o IdentitiesOnly=yes \
+                    -o StrictHostKeyChecking=accept-new -o ConnectTimeout=15)
+
+          for port in 22 443; do
+            echo "Connecting to $EC2_USER@$EC2_HOST:$port ..."
+            if ssh "${SSH_OPTS[@]}" -p "$port" "$EC2_USER@$EC2_HOST" \
+                 "printf '%s\n' '$TIMESTAMP' > '$TARGET_FILE'"; then
+              echo "Wrote IST timestamp '$TIMESTAMP' to $TARGET_FILE on $EC2_HOST (port $port)"
+              exit 0
+            fi
+          done
+
+          echo "::error::SSH failed on ports 22 and 443. Verify EC2_HOST and that the security group allows inbound SSH."
+          exit 1
 
       - name: Clean up SSH key
         if: always()
