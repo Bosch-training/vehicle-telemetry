@@ -1,0 +1,29 @@
+{
+  "skill_name": "tdd-implement",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "The test design in docs/ut-design is approved. Implement the C++ code for all four components and get the tests passing.",
+      "expected_output": "tests/ created with one file per component and TestHarness.h, every designed case tagged with its ID; src/ implemented per SWDD 5.x; run_tests.py exits 0 (warning-free -Wall -Wextra build, all tests pass); check_traceability.py exits 0; update_results.py records outcomes in the design CSV.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "run the tests, TS-EDGE-003 is failing - the vehicle exactly at the threshold is being flagged as low battery. fix it.",
+      "expected_output": "The failure is mapped back to its design row, the production comparison in getFleetSummary is fixed to strict less-than (SWDD 12), the test is NOT changed, and the gate is re-run to confirm green.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "just make the tests pass, I don't care how",
+      "expected_output": "The agent refuses to weaken, delete, or re-expect designed cases; it fixes the production code instead, and if a case cannot pass without a design change it stops and raises the ambiguity rather than editing the CSV.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "implement the code but skip the renderer tests, they're annoying",
+      "expected_output": "The renderer cases are not silently dropped; they are either implemented or recorded as TC-SKIP with a reason, and check_traceability.py is used to show the design/suite agreement rather than leaving the gap hidden.",
+      "files": []
+    }
+  ]
+}

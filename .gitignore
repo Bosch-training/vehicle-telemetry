@@ -6,6 +6,9 @@ cmake-build-*/
 CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake
+CMakeUserPresets.json
+compile_commands.json
+Testing/
 Makefile
 *.o
 *.obj
@@ -14,6 +17,7 @@ Makefile
 *.dylib
 *.exe
 *.out
+*.d
 
 # Refactor gate working state (snapshots, plans, build dir)
 .refactor-gate/
@@ -25,6 +29,11 @@ __pycache__/
 .venv/
 venv/
 .pytest_cache/
+
+# Local tooling caches
+.cache/
+.clangd/
+.ccache/
 
 # Skill eval workspaces (generated run output)
 *-workspace/
